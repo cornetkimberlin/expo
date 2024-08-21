@@ -16,6 +16,7 @@ import type {
   DOMPropsWithSource,
   MarshalPropValueType,
   WebViewProps,
+  WebViewRef,
 } from './www-types';
 
 function mergeRefs(...props) {
@@ -34,9 +35,9 @@ function mergeRefs(...props) {
   };
 }
 
-const RawWebView = React.forwardRef(
-  ({ autoSize = false, dom, source, ...marshalProps }: DOMPropsWithSource, ref) => {
-    const webviewRef = React.useRef<WebView>(null);
+const RawWebView = React.forwardRef<WebViewRef, DOMPropsWithSource>(
+  ({ autoSize = false, dom, source, ...marshalProps }, ref) => {
+    const webviewRef = React.useRef<WebViewRef>(null);
     const [containerStyle, setContainerStyle] =
       React.useState<WebViewProps['containerStyle']>(null);
 

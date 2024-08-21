@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import type { WebViewRef } from 'expo/dom';
+import { useRef, useState } from 'react';
 import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import Actions from '../components/02-actions';
 import LocalAsset from '../components/03-local-asset';
 import Tailwind from '../components/04-tailwind';
 import PublicAsset from '../components/05-public-asset';
+import ForwardRef from '../components/06-forward-ref';
 
 export default function Page() {
   const [index, setIndex] = useState(0);
+  const forwardedRef = useRef<WebViewRef>(null);
 
   return (
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1, padding: 56 }}>
@@ -42,6 +45,22 @@ export default function Page() {
 
       <TestCase name="Tailwind">
         <Tailwind autoSize />
+      </TestCase>
+
+      <TestCase name="forwardRef">
+        <ForwardRef autoSize ref={forwardedRef} />
+        <Button
+          title="Toggle width by injectJavaScript"
+          onPress={() => {
+            forwardedRef.current?.injectJavaScript(`
+            (function() {
+              const element = document.getElementById('test');
+              element.style.width = element.offsetWidth > 50 ? '50px' : '200px';
+            })();
+            true;
+          `);
+          }}
+        />
       </TestCase>
     </ScrollView>
   );

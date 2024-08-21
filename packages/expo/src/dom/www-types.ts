@@ -1,4 +1,4 @@
-import type { WebViewProps } from 'react-native-webview';
+import type { WebView, WebViewProps } from 'react-native-webview';
 
 export type JSONValue = boolean | number | string | null | JSONArray | JSONObject;
 
@@ -21,6 +21,7 @@ export type MarshalPropValueType =
   | Record<string, MarshalPropValuePrimitiveType>
   | MarshalPropValueNativeAction;
 
+export type WebViewRef = WebView;
 export { WebViewProps };
 
 /**
@@ -37,6 +38,11 @@ interface DOMComponentProps {
    * @default false
    */
   autoSize?: boolean;
+
+  /**
+   * The ref to the WebView.
+   */
+  ref?: React.Ref<WebViewRef>;
 }
 
 /**

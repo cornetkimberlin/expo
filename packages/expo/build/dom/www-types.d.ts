@@ -1,4 +1,4 @@
-import type { WebViewProps } from 'react-native-webview';
+import type { WebView, WebViewProps } from 'react-native-webview';
 export type JSONValue = boolean | number | string | null | JSONArray | JSONObject;
 export interface JSONArray extends Array<JSONValue> {
 }
@@ -12,6 +12,7 @@ export type BridgeMessage<TData extends JSONValue> = {
 export type MarshalPropValuePrimitiveType = number | string | boolean | null | undefined;
 export type MarshalPropValueNativeAction = (...args: any[]) => any;
 export type MarshalPropValueType = MarshalPropValuePrimitiveType | MarshalPropValuePrimitiveType[] | Record<string, MarshalPropValuePrimitiveType> | MarshalPropValueNativeAction;
+export type WebViewRef = WebView;
 export { WebViewProps };
 /**
  * The explicit props for DOM components.
@@ -26,6 +27,10 @@ interface DOMComponentProps {
      * @default false
      */
     autoSize?: boolean;
+    /**
+     * The ref to the WebView.
+     */
+    ref?: React.Ref<WebViewRef>;
 }
 /**
  * The public props for DOM components.
