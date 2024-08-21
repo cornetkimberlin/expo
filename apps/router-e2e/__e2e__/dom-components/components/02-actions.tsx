@@ -14,7 +14,7 @@ export default function Page({
   showAlert: (time: number) => void;
   throwError: () => never;
   getNativeSettings: () => Promise<string>;
-}) {
+} & import('expo/dom').DOMProps) {
   const [nativeSetting, setNativeSetting] = useState<string | null>(null);
 
   return (
