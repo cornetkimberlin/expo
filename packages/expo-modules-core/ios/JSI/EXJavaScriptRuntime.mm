@@ -107,10 +107,15 @@
     EXJavaScriptValue * _Nonnull thisValue,
     NSArray<EXJavaScriptValue *> * _Nonnull arguments) {
       NSError *error;
-      id result = block(thisValue, arguments, &error);
+      EXJavaScriptValue *result = block(thisValue, arguments, &error);
 
       if (error == nil) {
-        return expo::convertObjCObjectToJSIValue(runtime, result);
+        if ([result isNull]) {
+          return jsi::Value::null();
+        }
+        auto dupa = jsi::Value(runtime, *[result get]);
+        
+        return dupa;
       } else {
         // `expo::makeCodedError` doesn't work during unit tests, so we construct Error and add a code,
         // instead of using the CodedError subclass.
